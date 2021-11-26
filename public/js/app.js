@@ -2162,7 +2162,8 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    districts: ['5-й поселок', 'Голиковка', 'Древлянка', 'Заводская', 'Зарека', 'Ключевая', 'Кукковка', 'Новый сайнаволок', 'Октябрьский', 'Первомайский', 'Перевалка', 'Сулажгора', 'Университетский городок', 'Центр']
+    districts: ['5-й поселок', 'Голиковка', 'Древлянка', 'Заводская', 'Зарека', 'Ключевая', 'Кукковка', 'Новый сайнаволок', 'Октябрьский', 'Первомайский', 'Перевалка', 'Сулажгора', 'Университетский городок', 'Центр'],
+    workers: []
   },
   actions: {
     getWorker: function getWorker(context, payload) {
@@ -2172,11 +2173,17 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1_
         }
       }).then(function (response) {
         console.log(response);
+        console.log(response.data);
+        context.commit('SET_WORKERS', response.data);
       })["catch"](function (error) {});
     }
   },
   getters: {},
-  mutations: {}
+  mutations: {
+    SET_WORKERS: function SET_WORKERS(state, payload) {
+      state.workers = payload;
+    }
+  }
 }));
 
 /***/ }),

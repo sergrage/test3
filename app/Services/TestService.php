@@ -88,7 +88,8 @@ public function findWorker($districtName)
 
         foreach($this->workers as $w) {
         	if($w['area_name'] == $districtName) {
-        		return $w['login'];
+        		$result[] = $w['login'];
+        		return $result;
         	}
         }
 
