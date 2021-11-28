@@ -9,7 +9,7 @@ class Price extends Model
 {
     use HasFactory;
 
-     protected $fillable = ['price', 'carrier_id'];
+     protected $fillable = ['price', 'interval', 'carrier_id'];
 
 
     public function carrier()
@@ -17,8 +17,4 @@ class Price extends Model
         return $this->belongsTo(Carrier::class);
     }
 
-    public function paymentInterval()
-    {
-        return $this->hasOne(PaymentInterval::class);
-    }
 }

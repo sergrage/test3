@@ -1,18 +1,44 @@
 <template>
     <div class="test">
-    	<h1 class="pb-5">Выбирите район для поиска работника</h1>
-    	<ul class="list-group">
-    		<li v-for="district in districtsList" class="list-group-item" @click="districtClick($event)">{{district}}</li>
-    	</ul>
+        <form action="">
+            <select class="form-select" v-model="selected">
+                <option disabled value="">Выберите район</option>
+                <option v-for="district in districtsList" :value="district">{{district}}</option>
+            </select>
+        </form>
+        <div class="pt-3" v-if="showMessage">
+            <div class="alert alert-primary" role="alert">
+                {{message}}  <span v-for="(login, index) in workersLogins"> {{login}} </span>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     computed: {
+        selected: {
+            get() {
+                return this.$store.state.selectDistrict;
+            },
+            set(value) {
+                this.$store.commit('SET_SELECT_DISTRICT', value)
+                this.$store.dispatch('getWorker', this.$store.state.selectDistrict)
+            }
+
+        },
     	districtsList() {
     		return this.$store.state.districts
-    	}
+    	},
+        showMessage() {
+            return this.$store.state.showMessage
+        },
+        message() {
+            return this.$store.state.message
+        },
+        workersLogins() {
+            return this.$store.state.workers
+        }
     },
     methods: {
     	districtClick(event) {
@@ -23,7 +49,7 @@ export default {
     	}
     },
     mounted() {
-        console.log('Component mounted.')
+        // console.log('Component mounted.')
     }
 }
 </script>

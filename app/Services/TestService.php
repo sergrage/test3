@@ -89,7 +89,7 @@ public function findWorker($districtName)
         foreach($this->workers as $w) {
         	if($w['area_name'] == $districtName) {
         		$result[] = $w['login'];
-        		return $result;
+                return response()->json(['result' => $result, 'state' => 200, 'msg' => 'В этом районе есть сотрудник, его логин:']);
         	}
         }
 
@@ -106,17 +106,18 @@ public function findWorker($districtName)
 			}
 		}
 
-		return $result ? $result : null;
+		return $result ? response()->json([
+                'result' => $result, 'state' => 200, 'msg' => 'В этом районе нет сотрудников, но есть в соседних. Логины:']) :  null ;
 
     }
-
-
 
 public function crossingIntervals($timeInterval)
 {
 	$result = [];
-	
-	if($this->timeValid($timeInterval) == false) {return false;}
+
+	if($this->timeValid($timeInterval) == false) {
+        return response()->json(['result' => [], 'state' => 200, 'msg' => 'Ошибка валидации', 'error' => true]);
+	}
 
 	$periodA  = $this->intervalFormat($timeInterval);
 
@@ -125,18 +126,18 @@ public function crossingIntervals($timeInterval)
 		$result[$interval] = $this->calculatePeriodsOverlap($periodA, $periodB);
 	}
 
-	return $result;
+	return response()->json(['result' => $result, 'state' => 200, 'msg' => '', 'error' => false]);
 
 }
 
 // здесь происходит сравнение интервалов и проверка наложения друг на друга
-public function calculatePeriodsOverlap(CarbonPeriod $periodA, CarbonPeriod $periodB)
+public function calculatePeriodsOverlap(CarbonPeriod $periodA, CarbonPeriod $periodB): string
 {
     return $periodA->overlaps($periodB) ? 'произошло наложение' : 'наложения нет';
 }
 
 // из строки-даты создаем новый экземпляр CarbonPeriod
-// в CarbonPeriod есть готовые методы сравнения/наложения интервалов 
+// в CarbonPeriod есть готовые методы сравнения/наложения интервалов
 public function intervalFormat($timeInterval)
 {
 	$dateStart = $this->intervalParse($timeInterval)['intervalStart'];
@@ -146,7 +147,6 @@ public function intervalFormat($timeInterval)
 
 public function intervalParse($timeInterval)
 {
-	
 	$position = strpos($timeInterval, '-');
     $dateStart = date_create(Str::substr($timeInterval, 0, $position));
 	$dateEnd = date_create(Str::substr($timeInterval, $position + 1 ));
@@ -158,9 +158,9 @@ public function intervalParse($timeInterval)
 // но не учитывает выход за интервал, т.е. можно передать 25 часов или 70 минут
 // это будет восприниматься, как-будто передали 01:10.
 // выод за пределы проверяем также на exception во время формирования даты стандартными ср-вами PHP
-// вариант когда первое время больше второго не проверяем, при желании можно развернуть   
-public function timeValid($timeInterval)
-{	
+// вариант когда первое время больше второго не проверяем, при желании можно развернуть
+public function timeValid($timeInterval): bool
+{
 	try {
     	Carbon::createFromFormat('H:i-H:i', $timeInterval);
 		$dateStart = $this->intervalParse($timeInterval)['intervalStart'];

@@ -16,6 +16,7 @@ class CreatePricesTable extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
             $table->float('price');
+            $table->integer('interval')->nullable();
             $table->foreignId('carrier_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

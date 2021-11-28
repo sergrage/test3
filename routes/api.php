@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::get('/carriers', [App\Http\Controllers\Api\TestController::class, 'carriers'])->name('carriers');
+Route::get('/getCarriers', [App\Http\Controllers\Api\TestController::class, 'carriers'])->name('carriers');
 Route::get('/findWorkers', [App\Http\Controllers\Api\TestController::class, 'workers'])->name('workers');
+Route::get('/crossIntervals', [App\Http\Controllers\Api\TestController::class, 'crossIntervals'])->name('crossIntervals');

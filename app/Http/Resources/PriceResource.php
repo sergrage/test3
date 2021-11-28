@@ -16,7 +16,7 @@ class PriceResource extends JsonResource
     {
         return [
             'price' => $this->price,
-            'paymentInterval' => new PaymentIntervalResource($this->whenLoaded('paymentInterval')),
+            'interval' => $this->interval,
         ];
     }
 }

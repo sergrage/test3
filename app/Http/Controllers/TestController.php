@@ -2,33 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\TestService;
-
+use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
 
-	protected $service;
-
-    public function __construct(TestService $service) {
-        $this->service = $service;
-    }
-
-
-    public function test1()
+    public function test4()
     {
-        return view('app.workers');
-    	// dd($this->service->findWorker('Голиковка'));
+        return view('app.users');
     }
 
-    // {
-    //     dd($this->service->crossingIntervals('16:00-28:00'));
-    // }    public function test2()
-
-
-    public function test3()
+    public function test5()
     {
-        return view('app.carriers');
+    return view('app.olympiad');
     }
+
+    public function test6()
+    {
+
+
+        DB::transaction(function () {
+            $user = DB::connection('mysql')->select('SELECT * FROM `users` WHERE id=1');
+            DB::disconnect('mysql_external');
+            $task = Task::first();
+
+            $newTask = $task->replicate();
+            $newTask->project_id = 16; // the new project_id
+            $newTask->save();
+        });
+    return 123;
+    }
+
+
+
 }
