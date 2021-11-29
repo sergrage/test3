@@ -26,3 +26,6 @@ Route::get('/test4', [App\Http\Controllers\TestController::class, 'test4'])->nam
 
 Route::get('/test5', [App\Http\Controllers\TestController::class, 'test5'])->name('test5');
 Route::get('/test6', [App\Http\Controllers\TestController::class, 'test6'])->name('test6');
+
+Route::get('/testSql', [App\Http\Controllers\TestController::class, 'testSql'])->name('testSql');
+
