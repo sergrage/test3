@@ -42,15 +42,10 @@ export default {
     },
     methods: {
     	districtClick(event) {
-    		// let districtName =  event.target.outerText
     		this.$store.dispatch('getWorker', event.target.outerText)
-    		// return event.target.outerText
-    		// return ;
     	}
     },
-    mounted() {
-        // console.log('Component mounted.')
-    }
+    mounted() { }
 }
 </script>
 

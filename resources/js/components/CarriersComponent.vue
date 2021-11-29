@@ -3,7 +3,7 @@
         <div class="col-6">
             <form action="">
                 <select class="form-select" v-model="selected">
-                    <option disabled value="10000">Выберите перевозчика</option>
+                    <option disabled value="">Выберите перевозчика</option>
                     <option v-for="(carrier, index) in carriers" :value="index">{{carrier.name}}</option>
                 </select>
             </form>
@@ -50,7 +50,7 @@ export default {
         return {
             selectCarrier: '',
             carrierIsTake: false,
-            selectedCarrierIndex: 10000,
+            selectedCarrierIndex: '',
             cargoWeight: null,
             showPrice: false,
             validationError: false,
@@ -69,11 +69,12 @@ export default {
                  this.selectedCarrierIndex = value
                  this.carrierIsTake = true
                  this.pricesList = this.carriers[this.selectedCarrierIndex].prices
+                 this.showAnswer = false
             }
 
         },
         carriers() {
-            return this.$store.state.carriers;
+            return this.$store.state.carriers
         }
     },
     methods: {
@@ -82,29 +83,20 @@ export default {
             this.payment = ''
             if(isNaN(this.cargoWeight)) {
                 this.validationError = true
-                return true;
+                return true
             }
-            // let pricesList = this.carriers[this.selectedCarrierIndex].prices
             let pricesListRev = this.pricesList
-            console.log(pricesListRev)
             let result = 0
             let weight = this.cargoWeight
             let payment = ''
             for(let i = pricesListRev.length-1; i>=0; i--) {
-                // console.log(pricesListRev[i].interval)
                 if(pricesListRev[i].interval <= weight) {
                     result += (weight - pricesListRev[i].interval) * pricesListRev[i].price
                     weight = weight - (weight - pricesListRev[i].interval)
-                    // payment += (weight - pricesListRev[i].interval). toString() + '*' + pricesListRev[i].price. toString() + '+'
-                } else {
-                    // result += pricesListRev[i].price * this.cargoWeight
-                    // weight = weight - (weight - pricesListRev[i].interval)
                 }
-                // console.log(pricesList[i].price)
             }
 
             this.result = result
-            // this.payment = payment
             this.showAnswer = true
         }
     },
