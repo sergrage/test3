@@ -10,31 +10,17 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
 
-    public function test4()
+    public function sql()
     {
-        return view('app.users');
+        return view('app.sql');
     }
 
-    public function test5()
+    public function showOlympiadPage()
     {
     return view('app.olympiad');
     }
 
-    public function test6()
-    {
-        // DB::transaction(function () {
-        //     $user = DB::connection('mysql')->select('SELECT * FROM `users` WHERE id=1');
-        //     DB::disconnect('mysql_external');
-        //     $task = Task::first();
-
-        //     $newTask = $task->replicate();
-        //     $newTask->project_id = 16; // the new project_id
-        //     $newTask->save();
-        // });
-    return 123;
-    }
-
-     public function testSql()
+    public function testSql()
     {
         $users = User::whereHas('orders')->get();
         $products = Product::whereHas('catalog')->get();

@@ -25,8 +25,8 @@
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
                             <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" aria-current="page" href="/">Главная</a>
-                            <a class="nav-link {{ request()->is('test4') ? 'active' : '' }}" href="{{route('test4')}}">Задачки по SQL</a>
-                            <a class="nav-link {{ request()->is('test5') ? 'active' : '' }}" href="{{route('test5')}}">Задача по HTML-CSS-JS</a>
+                            <a class="nav-link {{ request()->is('sql') ? 'active' : '' }}" href="{{route('sql')}}">Задачки по SQL</a>
+                            <a class="nav-link {{ request()->is('olympiad') ? 'active' : '' }}" href="{{route('olympiad')}}">Задача по HTML-CSS-JS</a>
                         </div>
                     </div>
                 </div>
